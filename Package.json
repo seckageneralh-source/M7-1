@@ -1,0 +1,23 @@
+{
+  "name": "m7-sovereign",
+  "version": "2.0.0",
+  "description": "M7 Sovereign Intelligence System — 7-Domain Real Stream Processing Engine",
+  "main": "server.js",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "start":   "node server.js",
+    "dev":     "node --watch server.js",
+    "status":  "curl -s http://localhost:3000/api/status | node -e \"const d=[];process.stdin.on('data',c=>d.push(c));process.stdin.on('end',()=>{const j=JSON.parse(Buffer.concat(d));console.log('Balance:',j.treasury.balance,'| Blocks:',j.treasury.blocks,'| Events:',j.domains.reduce((s,x)=>s+x.totalEvents,0))})\"",
+    "audit":   "curl -s http://localhost:3000/api/audit | node -e \"const d=[];process.stdin.on('data',c=>d.push(c));process.stdin.on('end',()=>console.log(JSON.stringify(JSON.parse(Buffer.concat(d)),null,2)))\"",
+    "streams": "curl -s http://localhost:3000/api/connectors | node -e \"const d=[];process.stdin.on('data',c=>d.push(c));process.stdin.on('end',()=>console.log(JSON.stringify(JSON.parse(Buffer.concat(d)),null,2)))\""
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "ws":      "^8.18.0"
+  },
+  "keywords": ["m7","sovereign","intelligence","real-time","streams","treasury"],
+  "license": "UNLICENSED",
+  "private": true
+}
